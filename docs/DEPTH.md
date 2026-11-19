@@ -32,10 +32,12 @@
 | TRAP-15 | ug/kg与mg/kg | 差1000倍 | 浓度统一mg/kg | `app/modules/m4_segments/rules.py` | `tests/test_segments.py::test_unit_conversion` |
 | TRAP-25 | 标准时间边界 | 双版或错版 | 采样日半开区间选版 | `app/modules/m3_versions/standards.py` | `tests/test_versions.py::test_halfopen_effective` |
 | TRAP-20 | 复检引用环 | 遍历无法结束 | 引用路径检测 | `app/modules/m5_calculate/rules.py` | `tests/test_calculate.py::test_cycle_rejected` |
+| TRAP-27 | 补发冒用旧编号 | 按编号覆盖旧批次证据或全部拒收 | 身份锚点裁决：同锚沿用、异锚IDENTITY按行隔离 | `app/modules/m5_calculate/rules.py` | `tests/test_calculate.py::test_reused_number_different_sample_is_identity_fraud` |
+| TRAP-28 | 补发替代后原始报告丢失 | 只留最新版本 | 版本沿革入封存证据与登记 | `app/modules/m7_archive/export_out.py` | `tests/test_archive.py::test_bundle_records_ruling_lineage_and_fraud` |
 
 ## 对账规则
 
-输入行数=采纳+隔离+空行+重复表头+完全重复；业务总数与计算证据独立求和。隔离行保留来源行、ID、原因码与原值。
+输入行数=采纳+隔离+空行+重复表头+完全重复；业务总数与计算证据独立求和。隔离行保留来源行、ID、原因码与原值。编号裁决（沿用原编号/编号冒用隔离）随对账同源产出，批次等级只统计采纳证据，冒用件不产生等级；封存CSV含运行清单、对账、编号裁决、计算、版本沿革与隔离六类记录。
 
 ## 已知不覆盖
 

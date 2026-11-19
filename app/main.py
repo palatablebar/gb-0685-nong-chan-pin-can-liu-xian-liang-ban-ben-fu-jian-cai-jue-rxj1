@@ -25,6 +25,9 @@ def create_app():
     def list_runs():return jsonify(store.history())
     @app.get('/api/runs/<run_id>')
     def get_run(run_id):return jsonify(store.get(run_id))
+    @app.get('/api/identities')
+    def identities():
+        return jsonify(store.identity_registry(request.args.get('report_id')))
     @app.post('/api/runs/<run_id>/review')
     def review(run_id):
         data=request.get_json(silent=True) or {}
